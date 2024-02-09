@@ -1,12 +1,16 @@
 from django.core.management import BaseCommand
 from django.contrib.auth.models import User
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        if not User.objects.filter(username="dsgov").exists():
+        if not User.objects.filter(username=os.getenv('ADMIN_USER')).exists():
             user = User.objects.create(
-                username="dsgov",
+                username=os.getenv('ADMIN_USER'),
                 first_name="Elon",
                 last_name="Mask",
                 is_superuser=True,
@@ -14,5 +18,5 @@ class Command(BaseCommand):
                 is_active=True,
             )
 
-            user.set_password("!Vjlxfybt45")
+            user.set_password(os.getenv('ADMIN_PWD'))
             user.save()
