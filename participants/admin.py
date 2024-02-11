@@ -1,10 +1,14 @@
 from django.contrib import admin, messages
 from django.http import HttpResponse
 from participants.models import Participants, TestSending, Log
+from dotenv import load_dotenv
 import requests
 import datetime
 import csv
 import openpyxl
+import os
+
+load_dotenv()
 
 
 @admin.register(Participants)
@@ -26,7 +30,7 @@ class UserRegisterAdmin(admin.ModelAdmin):
         sent_successfully = False
         for object in queryset:
             if not object.status:
-                url = 'http://localhost:8000/api/test/create/'
+                url = os.getenv('DESTINATION_URL')
                 data = {
                     'first_name': object.first_name,
                     'second_name': object.second_name,
