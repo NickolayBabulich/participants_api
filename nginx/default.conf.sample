@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name hell-app.ru;
+    server_name example.ru;
 
     location /static/ {
         alias /app/staticfiles/;
